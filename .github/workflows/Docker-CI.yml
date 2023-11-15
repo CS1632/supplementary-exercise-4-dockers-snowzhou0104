@@ -42,3 +42,6 @@ jobs:
 
       - name: Run Selenium Tests
         run: cd selenium && mvn test
+
+      - name: wait Web Service
+        run: cd selenium mvn test
