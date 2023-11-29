@@ -33,7 +33,7 @@ import java.time.Duration;
 public class D3Test {
   private WebDriver driver;
   private Map<String, Object> vars;
-  private final String BASE_URL = "http://localhost:8080/";
+  private final String BASE_URL = "http://cs1632.appspot.com";
   JavascriptExecutor js;
   @Before
   public void setUp() {
@@ -159,7 +159,40 @@ public class D3Test {
   }
   @Test
   public void tEST11GREETACATWITHNAME() {
-    driver.get("http://localhost:8080//greet-a-cat/Jennyanydots");
+    driver.get("https://cs1632.appspot.com/greet-a-cat/Jennyanydots");
     driver.findElement(By.xpath("//h4[contains(.,\'Meow! from Jennyanydots.\')]")).click();
+  }
+  @Test
+  public void dEFECT1GREETCAT() {
+    
+    driver.findElement(By.linkText("Rent-A-Cat")).click();
+    driver.findElement(By.id("rentID")).click();
+    driver.findElement(By.id("rentID")).sendKeys("1");
+    driver.findElement(By.xpath("//button[contains(.,\'Rent\')]")).click();
+    driver.findElement(By.cssSelector(".form-group:nth-child(3) > .col-xs-2:nth-child(2)")).click();
+    driver.findElement(By.id("rentID")).sendKeys("2");
+    driver.findElement(By.xpath("//button[contains(.,\'Rent\')]")).click();
+    driver.findElement(By.linkText("Greet-A-Cat")).click();
+    driver.findElement(By.cssSelector("body")).click();
+    assertThat(driver.findElement(By.cssSelector("#greeting > h4")).getText(), is("Meow!"));
+  }
+  @Test
+  public void dEFECT2FEEDCAT() {
+    
+    driver.findElement(By.linkText("Feed-A-Cat")).click();
+    driver.findElement(By.id("catnips")).click();
+    driver.findElement(By.id("catnips")).sendKeys("-3");
+    driver.findElement(By.xpath("//button[contains(.,\'Feed\')]")).click();
+    assertThat(driver.findElement(By.id("feedResult")).getText(), is("Cat fight!"));
+  }
+  @Test
+  public void dEFECT3GREETCATSPECIFICNAME() {
+    
+    driver.findElement(By.linkText("Rent-A-Cat")).click();
+    driver.findElement(By.id("rentID")).click();
+    driver.findElement(By.id("rentID")).sendKeys("1");
+    driver.findElement(By.xpath("//button[contains(.,\'Rent\')]")).click();
+    driver.get("https://cs1632.appspot.com/greet-a-cat/Jennyanydots");
+    assertThat(driver.findElement(By.cssSelector("#greeting > h4")).getText(), is("Jennyanydots is not here."));
   }
 }
